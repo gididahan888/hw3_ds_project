@@ -26,17 +26,14 @@ class KNN(ABC):
 
     def neighbours_indices(self, x):
         """ for a given point x, find indices of k closest points in the training set """
-        distances = []
-        for row in self.X_train:
-            distances.append(self.dist(x, row))
-        distances = np.array(distances)
+        distances = self.dist(x, self.X_train)
         k_closest_indices = np.argsort(distances)[:self.k]
         return k_closest_indices
 
     @staticmethod
     def dist(x1, x2):
         """returns Euclidean distance between x1 and x2"""
-        return np.sqrt(np.sum((x1 - x2) ** 2))
+        return np.sqrt(np.sum((x1 - x2) ** 2, axis = -1))
 
 
 class ClassificationKNN(KNN):
